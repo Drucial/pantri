@@ -1,15 +1,19 @@
 "use client";
 
-import * as React from "react";
-import { useEffect, useState, useRef } from "react";
 import {
-  FileTextIcon,
-  HomeIcon,
-  LayersIcon,
-  UsersIcon,
-  ChevronDownIcon,
-} from "lucide-react";
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@workspace/ui/components/avatar";
 import { Button } from "@workspace/ui/components/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -27,23 +31,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@workspace/ui/components/tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@workspace/ui/components/dropdown-menu";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@workspace/ui/components/avatar";
-import { cn } from "@workspace/ui/lib/utils";
 import { H3 } from "@workspace/ui/components/typography/h3";
-import type { Theme } from "../theme-toggle-button";
-import { ThemeToggleButton } from "../theme-toggle-button";
+import type { Theme } from "@workspace/ui/components/ui/shadcn-io/theme-toggle-button";
+import { ThemeToggleButton } from "@workspace/ui/components/ui/shadcn-io/theme-toggle-button";
+import { cn } from "@workspace/ui/lib/utils";
+import {
+  ChevronDownIcon,
+  FileTextIcon,
+  HomeIcon,
+  LayersIcon,
+  UsersIcon,
+} from "lucide-react";
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Simple logo component for the navbar
 const Logo = (props: React.SVGAttributes<SVGElement>) => {
@@ -119,12 +119,9 @@ const ThemeToggle = ({
   onThemeChange?: (theme: "light" | "dark") => void;
   currentTheme?: "light" | "dark";
 }) => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    if (onThemeChange) onThemeChange(newTheme);
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    onThemeChange?.(newTheme);
   };
 
   return (
@@ -425,4 +422,4 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
 
 Navbar06.displayName = "Navbar06";
 
-export { Logo, HamburgerIcon, ThemeToggle, UserMenu };
+export { HamburgerIcon, Logo, ThemeToggle, UserMenu };

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "@workspace/ui/globals.css";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/navbar";
 
@@ -24,10 +25,12 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased `}
       >
-        <Providers>
-          <Navbar />
-          {children}
-        </Providers>
+        <ErrorBoundary>
+          <Providers>
+            <Navbar />
+            {children}
+          </Providers>
+        </ErrorBoundary>
       </body>
     </html>
   );

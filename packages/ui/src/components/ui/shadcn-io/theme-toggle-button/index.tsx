@@ -1,9 +1,9 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
-import { useCallback } from "react";
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { Moon, Sun } from "lucide-react";
+import { useCallback } from "react";
 
 type AnimationVariant = "circle" | "circle-blur" | "gif" | "polygon";
 
@@ -58,7 +58,7 @@ export const ThemeToggleButton = ({
         start === "center" ? "50" : start.includes("top") ? "0" : "100";
       css = `
         @supports (view-transition-name: root) {
-          ::view-transition-old(root) { 
+          ::view-transition-old(root) {
             animation: none;
           }
           ::view-transition-new(root) {
@@ -82,7 +82,7 @@ export const ThemeToggleButton = ({
         start === "center" ? "50" : start.includes("top") ? "0" : "100";
       css = `
         @supports (view-transition-name: root) {
-          ::view-transition-old(root) { 
+          ::view-transition-old(root) {
             animation: none;
           }
           ::view-transition-new(root) {
