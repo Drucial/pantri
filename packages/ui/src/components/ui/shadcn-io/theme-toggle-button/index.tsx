@@ -16,7 +16,7 @@ type StartPosition =
 
 export type Theme = "light" | "dark";
 
-export interface ThemeToggleButtonProps {
+export type ThemeToggleButtonProps = {
   theme?: Theme;
   showLabel?: boolean;
   variant?: AnimationVariant;
@@ -24,7 +24,7 @@ export interface ThemeToggleButtonProps {
   url?: string; // For gif variant
   className?: string;
   onClick?: () => void;
-}
+};
 
 export const ThemeToggleButton = ({
   theme = "light",

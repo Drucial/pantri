@@ -2,19 +2,19 @@
 
 import React from "react";
 
-interface ErrorBoundaryState {
+type ErrorBoundaryState = {
   hasError: boolean;
   error?: Error;
-}
+};
 
-interface ErrorBoundaryProps {
+type ErrorBoundaryProps = {
   children: React.ReactNode;
   fallback?: React.ComponentType<{ error?: Error; resetError: () => void }>;
-}
+};
 
 const DefaultErrorFallback = ({
   error,
-  resetError
+  resetError,
 }: {
   error?: Error;
   resetError: () => void;

@@ -206,7 +206,8 @@ const DesktopNavigation = ({
                     href={link.href}
                     onClick={(e) => {
                       e.preventDefault();
-                      if (onNavItemClick && link.href) onNavItemClick(link.href);
+                      if (onNavItemClick && link.href)
+                        onNavItemClick(link.href);
                     }}
                     className={cn(
                       "flex size-8 items-center justify-center p-1.5 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
@@ -310,7 +311,7 @@ const UserMenu = ({
 );
 
 // Types
-export interface Navbar06NavItem {
+export type Navbar06NavItem = {
   href?: string;
   label: string;
   icon: React.ComponentType<{
@@ -319,14 +320,14 @@ export interface Navbar06NavItem {
     "aria-hidden"?: boolean;
   }>;
   active?: boolean;
-}
+};
 
-export interface Navbar06Language {
+export type Navbar06Language = {
   value: string;
   label: string;
-}
+};
 
-export interface Navbar06Props extends React.HTMLAttributes<HTMLElement> {
+export type Navbar06Props = {
   logo?: React.ReactNode;
   logoHref?: string;
   navigationLinks?: Navbar06NavItem[];
@@ -340,7 +341,7 @@ export interface Navbar06Props extends React.HTMLAttributes<HTMLElement> {
   onThemeChange?: (theme: Theme) => void;
   currentTheme?: Theme;
   onUserItemClick?: (item: string) => void;
-}
+} & React.HTMLAttributes<HTMLElement>;
 
 // Default navigation links with icons
 const defaultNavigationLinks: Navbar06NavItem[] = [

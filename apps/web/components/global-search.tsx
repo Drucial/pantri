@@ -5,11 +5,11 @@ import { cn } from "@workspace/ui/lib/utils";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 
-interface GlobalSearchProps {
+type GlobalSearchProps = {
   placeholder?: string;
   onSearchChange?: (value: string) => void;
   className?: string;
-}
+};
 
 export const GlobalSearch = ({
   placeholder = "Search for recipes...",

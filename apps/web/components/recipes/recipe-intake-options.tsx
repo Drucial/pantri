@@ -9,11 +9,13 @@ import {
   PenLineIcon,
 } from "lucide-react";
 
-interface RecipeIntakeOptionsProps {
+type RecipeIntakeOptionsProps = {
   onOptionSelect?: (value: string) => void;
-}
+};
 
-export const RecipeIntakeOptions = ({ onOptionSelect }: RecipeIntakeOptionsProps) => {
+export const RecipeIntakeOptions = ({
+  onOptionSelect,
+}: RecipeIntakeOptionsProps) => {
   const handleOptionClick = (value: string) => {
     onOptionSelect?.(value);
   };

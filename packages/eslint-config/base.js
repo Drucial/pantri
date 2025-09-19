@@ -25,9 +25,14 @@ export const config = [
         "error",
         { prefer: "type-imports", fixStyle: "separate-type-imports" }
       ],
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
       "@typescript-eslint/no-unused-vars": [
         "error",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: false
+        }
       ],
       "prefer-const": "error",
       "no-var": "error",
