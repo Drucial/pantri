@@ -25,12 +25,11 @@ const Ol = React.forwardRef<
 ));
 Ol.displayName = "Ol";
 
-const Li = React.forwardRef<
-  HTMLLIElement,
-  React.HTMLAttributes<HTMLLIElement>
->(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn("", className)} {...props} />
-));
+const Li = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
+  ({ className, ...props }, ref) => (
+    <li ref={ref} className={cn("", className)} {...props} />
+  )
+);
 Li.displayName = "Li";
 
 export { Ul, Ol, Li };

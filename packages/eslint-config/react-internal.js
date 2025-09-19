@@ -36,6 +36,30 @@ export const config = [
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
+
+      // React component style enforcement
+      "react/jsx-boolean-value": ["error", "never"],
+      "react/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }],
+      "react/jsx-fragments": ["error", "syntax"],
+      "react/jsx-no-useless-fragment": "error",
+      "react/jsx-pascal-case": "error",
+      "react/self-closing-comp": "error",
+      // "react/jsx-sort-props": [
+      //   "warn",
+      //   {
+      //     callbacksLast: true,
+      //     shorthandFirst: true,
+      //     multiline: "last",
+      //     reservedFirst: true,
+      //   }
+      // ],
+      "react/function-component-definition": [
+        "warn",
+        {
+          namedComponents: ["function-declaration", "arrow-function"],
+          unnamedComponents: "arrow-function",
+        }
+      ],
     },
   },
 ]

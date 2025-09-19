@@ -1,16 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState, useRef, useId } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   FileTextIcon,
-  GlobeIcon,
   HomeIcon,
   LayersIcon,
   UsersIcon,
-  SunIcon,
-  MoonIcon,
-  UserIcon,
   ChevronDownIcon,
 } from "lucide-react";
 import { Button } from "@workspace/ui/components/button";
@@ -25,13 +21,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@workspace/ui/components/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@workspace/ui/components/select";
 import {
   Tooltip,
   TooltipContent,
@@ -52,7 +41,9 @@ import {
   AvatarImage,
 } from "@workspace/ui/components/avatar";
 import { cn } from "@workspace/ui/lib/utils";
-import type { ComponentProps } from "react";
+import { H3 } from "@workspace/ui/components/typography/h3";
+import type { Theme } from "../theme-toggle-button";
+import { ThemeToggleButton } from "../theme-toggle-button";
 
 // Simple logo component for the navbar
 const Logo = (props: React.SVGAttributes<SVGElement>) => {
@@ -123,8 +114,10 @@ const HamburgerIcon = ({
 // Theme Toggle Component
 const ThemeToggle = ({
   onThemeChange,
+  currentTheme,
 }: {
   onThemeChange?: (theme: "light" | "dark") => void;
+  currentTheme?: "light" | "dark";
 }) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
@@ -135,19 +128,12 @@ const ThemeToggle = ({
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="h-8 w-8"
+    <ThemeToggleButton
+      theme={currentTheme ?? "light"}
       onClick={toggleTheme}
-    >
-      {theme === "light" ? (
-        <SunIcon className="h-4 w-4" />
-      ) : (
-        <MoonIcon className="h-4 w-4" />
-      )}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+      variant="circle-blur"
+      start="top-right"
+    />
   );
 };
 
@@ -237,7 +223,8 @@ export interface Navbar06Props extends React.HTMLAttributes<HTMLElement> {
   userAvatar?: string;
   onNavItemClick?: (href: string) => void;
   onLanguageChange?: (language: string) => void;
-  onThemeChange?: (theme: "light" | "dark") => void;
+  onThemeChange?: (theme: Theme) => void;
+  currentTheme?: Theme;
   onUserItemClick?: (item: string) => void;
 }
 
@@ -249,38 +236,25 @@ const defaultNavigationLinks: Navbar06NavItem[] = [
   { href: "#", label: "Team", icon: UsersIcon },
 ];
 
-// Default language options
-const defaultLanguages: Navbar06Language[] = [
-  { value: "en", label: "En" },
-  { value: "es", label: "Es" },
-  { value: "fr", label: "Fr" },
-  { value: "de", label: "De" },
-  { value: "ja", label: "Ja" },
-];
-
 export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
   (
     {
       className,
       logo = <Logo />,
-      logoHref = "#",
       navigationLinks = defaultNavigationLinks,
-      languages = defaultLanguages,
-      defaultLanguage = "en",
       userName = "John Doe",
       userEmail = "john@example.com",
       userAvatar,
       onNavItemClick,
-      onLanguageChange,
       onThemeChange,
       onUserItemClick,
+      currentTheme,
       ...props
     },
-    ref,
+    ref
   ) => {
     const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef<HTMLElement>(null);
-    const selectId = useId();
 
     useEffect(() => {
       const checkWidth = () => {
@@ -312,15 +286,15 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
           ref.current = node;
         }
       },
-      [ref],
+      [ref]
     );
 
     return (
       <header
         ref={combinedRef}
         className={cn(
-          "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 [&_*]:no-underline",
-          className,
+          "fixed top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 [&_*]:no-underline",
+          className
         )}
         {...props}
       >
@@ -355,13 +329,13 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
                               className={cn(
                                 "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
                                 link.active &&
-                                  "bg-accent text-accent-foreground",
+                                  "bg-accent text-accent-foreground"
                               )}
                             >
                               <Icon
                                 size={16}
                                 className="text-muted-foreground"
-                                aria-hidden={true}
+                                aria-hidden
                               />
                               <span>{link.label}</span>
                             </button>
@@ -380,9 +354,9 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
                 className="flex items-center space-x-2 text-primary hover:text-primary/90 transition-colors cursor-pointer"
               >
                 <div className="text-2xl">{logo}</div>
-                <span className="hidden font-bold text-xl sm:inline-block">
-                  shadcn.io
-                </span>
+                <H3 className="leading-none">
+                  <span>pantr.io</span>
+                </H3>
               </button>
               {/* Desktop navigation - icon only */}
               {!isMobile && (
@@ -405,10 +379,10 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
                                   className={cn(
                                     "flex size-8 items-center justify-center p-1.5 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
                                     link.active &&
-                                      "bg-accent text-accent-foreground",
+                                      "bg-accent text-accent-foreground"
                                   )}
                                 >
-                                  <Icon size={20} aria-hidden={true} />
+                                  <Icon size={20} aria-hidden />
                                   <span className="sr-only">{link.label}</span>
                                 </NavigationMenuLink>
                               </TooltipTrigger>
@@ -431,30 +405,10 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
           {/* Right side */}
           <div className="flex items-center gap-2">
             {/* Theme toggle */}
-            <ThemeToggle onThemeChange={onThemeChange} />
-            {/* Language selector */}
-            <Select
-              defaultValue={defaultLanguage}
-              onValueChange={onLanguageChange}
-            >
-              <SelectTrigger
-                id={`language-${selectId}`}
-                className="[&>svg]:text-muted-foreground/80 hover:bg-accent hover:text-accent-foreground h-8 border-none px-2 shadow-none [&>svg]:shrink-0"
-                aria-label="Select language"
-              >
-                <GlobeIcon size={16} aria-hidden={true} />
-                <SelectValue className="hidden sm:inline-flex" />
-              </SelectTrigger>
-              <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2 [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2">
-                {languages.map((lang) => (
-                  <SelectItem key={lang.value} value={lang.value}>
-                    <span className="flex items-center gap-2">
-                      <span className="truncate">{lang.label}</span>
-                    </span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <ThemeToggle
+              onThemeChange={onThemeChange}
+              currentTheme={currentTheme}
+            />
             {/* User menu */}
             <UserMenu
               userName={userName}
@@ -466,10 +420,9 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
         </div>
       </header>
     );
-  },
+  }
 );
 
 Navbar06.displayName = "Navbar06";
 
 export { Logo, HamburgerIcon, ThemeToggle, UserMenu };
-
