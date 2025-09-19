@@ -134,6 +134,123 @@ const ThemeToggle = ({
   );
 };
 
+// Mobile Navigation Component
+const MobileNavigation = ({
+  navigationLinks,
+  onNavItemClick,
+}: {
+  navigationLinks: Navbar06NavItem[];
+  onNavItemClick?: (href: string) => void;
+}) => (
+  <Popover>
+    <PopoverTrigger asChild>
+      <Button
+        className="group h-8 w-8 hover:bg-accent hover:text-accent-foreground"
+        variant="ghost"
+        size="icon"
+      >
+        <HamburgerIcon />
+      </Button>
+    </PopoverTrigger>
+    <PopoverContent align="start" className="w-64 p-1">
+      <NavigationMenu className="max-w-none">
+        <NavigationMenuList className="flex-col items-start gap-0">
+          {navigationLinks.map((link, index) => {
+            const Icon = link.icon;
+            return (
+              <NavigationMenuItem key={index} className="w-full">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavItemClick && link.href) onNavItemClick(link.href);
+                  }}
+                  className={cn(
+                    "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
+                    link.active && "bg-accent text-accent-foreground"
+                  )}
+                >
+                  <Icon
+                    size={16}
+                    className="text-muted-foreground"
+                    aria-hidden
+                  />
+                  <span>{link.label}</span>
+                </button>
+              </NavigationMenuItem>
+            );
+          })}
+        </NavigationMenuList>
+      </NavigationMenu>
+    </PopoverContent>
+  </Popover>
+);
+
+// Desktop Navigation Component
+const DesktopNavigation = ({
+  navigationLinks,
+  onNavItemClick,
+}: {
+  navigationLinks: Navbar06NavItem[];
+  onNavItemClick?: (href: string) => void;
+}) => (
+  <NavigationMenu className="flex">
+    <NavigationMenuList className="gap-2">
+      <TooltipProvider>
+        {navigationLinks.map((link) => {
+          const Icon = link.icon;
+          return (
+            <NavigationMenuItem key={link.label}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <NavigationMenuLink
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onNavItemClick && link.href) onNavItemClick(link.href);
+                    }}
+                    className={cn(
+                      "flex size-8 items-center justify-center p-1.5 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
+                      link.active && "bg-accent text-accent-foreground"
+                    )}
+                  >
+                    <Icon size={20} aria-hidden />
+                    <span className="sr-only">{link.label}</span>
+                  </NavigationMenuLink>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="px-2 py-1 text-xs">
+                  <p>{link.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            </NavigationMenuItem>
+          );
+        })}
+      </TooltipProvider>
+    </NavigationMenuList>
+  </NavigationMenu>
+);
+
+// Logo Component
+const NavbarLogo = ({
+  logo,
+  onClick,
+}: {
+  logo: React.ReactNode;
+  onClick?: () => void;
+}) => (
+  <button
+    onClick={(e) => {
+      e.preventDefault();
+      onClick?.();
+    }}
+    className="flex items-center space-x-2 text-primary hover:text-primary/90 transition-colors cursor-pointer"
+  >
+    <div className="text-2xl">{logo}</div>
+    <H3 className="leading-none">
+      <span>pantr.io</span>
+    </H3>
+  </button>
+);
+
 // User Menu Component
 const UserMenu = ({
   userName = "John Doe",
@@ -300,102 +417,20 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
           <div className="flex flex-1 items-center gap-2">
             {/* Mobile menu trigger */}
             {isMobile && (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    className="group h-8 w-8 hover:bg-accent hover:text-accent-foreground"
-                    variant="ghost"
-                    size="icon"
-                  >
-                    <HamburgerIcon />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align="start" className="w-64 p-1">
-                  <NavigationMenu className="max-w-none">
-                    <NavigationMenuList className="flex-col items-start gap-0">
-                      {navigationLinks.map((link, index) => {
-                        const Icon = link.icon;
-                        return (
-                          <NavigationMenuItem key={index} className="w-full">
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                if (onNavItemClick && link.href)
-                                  onNavItemClick(link.href);
-                              }}
-                              className={cn(
-                                "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer no-underline",
-                                link.active &&
-                                  "bg-accent text-accent-foreground"
-                              )}
-                            >
-                              <Icon
-                                size={16}
-                                className="text-muted-foreground"
-                                aria-hidden
-                              />
-                              <span>{link.label}</span>
-                            </button>
-                          </NavigationMenuItem>
-                        );
-                      })}
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                </PopoverContent>
-              </Popover>
+              <MobileNavigation
+                navigationLinks={navigationLinks}
+                onNavItemClick={onNavItemClick}
+              />
             )}
             <div className="flex items-center gap-6">
               {/* Logo */}
-              <button
-                onClick={(e) => e.preventDefault()}
-                className="flex items-center space-x-2 text-primary hover:text-primary/90 transition-colors cursor-pointer"
-              >
-                <div className="text-2xl">{logo}</div>
-                <H3 className="leading-none">
-                  <span>pantr.io</span>
-                </H3>
-              </button>
+              <NavbarLogo logo={logo} />
               {/* Desktop navigation - icon only */}
               {!isMobile && (
-                <NavigationMenu className="flex">
-                  <NavigationMenuList className="gap-2">
-                    <TooltipProvider>
-                      {navigationLinks.map((link) => {
-                        const Icon = link.icon;
-                        return (
-                          <NavigationMenuItem key={link.label}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <NavigationMenuLink
-                                  href={link.href}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    if (onNavItemClick && link.href)
-                                      onNavItemClick(link.href);
-                                  }}
-                                  className={cn(
-                                    "flex size-8 items-center justify-center p-1.5 rounded-md transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
-                                    link.active &&
-                                      "bg-accent text-accent-foreground"
-                                  )}
-                                >
-                                  <Icon size={20} aria-hidden />
-                                  <span className="sr-only">{link.label}</span>
-                                </NavigationMenuLink>
-                              </TooltipTrigger>
-                              <TooltipContent
-                                side="bottom"
-                                className="px-2 py-1 text-xs"
-                              >
-                                <p>{link.label}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </NavigationMenuItem>
-                        );
-                      })}
-                    </TooltipProvider>
-                  </NavigationMenuList>
-                </NavigationMenu>
+                <DesktopNavigation
+                  navigationLinks={navigationLinks}
+                  onNavItemClick={onNavItemClick}
+                />
               )}
             </div>
           </div>
@@ -422,4 +457,12 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
 
 Navbar06.displayName = "Navbar06";
 
-export { HamburgerIcon, Logo, ThemeToggle, UserMenu };
+export {
+  DesktopNavigation,
+  HamburgerIcon,
+  Logo,
+  MobileNavigation,
+  NavbarLogo,
+  ThemeToggle,
+  UserMenu,
+};

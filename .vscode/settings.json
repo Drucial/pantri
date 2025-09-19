@@ -17,34 +17,17 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.includePackageJsonAutoImports": "auto",
 
-  // Editor
+  // Editor - Functional improvements only
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": false,
-  "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
 
-  // Files
+  // Files - Basic cleanup
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/.next": true,
-    "**/dist": true,
-    "**/build": true
-  },
 
   // Language-specific formatting
   "[typescript]": {
@@ -82,30 +65,4 @@
     "typescriptreact"
   ],
 
-  // Search
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/.next": true,
-    "**/dist": true,
-    "**/build": true,
-    "pnpm-lock.yaml": true
-  },
-
-  // Terminal
-  "terminal.integrated.defaultProfile.osx": "zsh",
-
-  // Git
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "git.enableSmartCommit": true,
-
-  // Explorer
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {
-    "*.ts": "${capture}.js",
-    "*.tsx": "${capture}.js",
-    "package.json": "package-lock.json,pnpm-lock.yaml,yarn.lock",
-    "tsconfig.json": "tsconfig.*.json",
-    "tailwind.config.*": "postcss.config.*"
-  }
 }

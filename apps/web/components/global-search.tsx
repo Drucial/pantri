@@ -31,9 +31,15 @@ export const GlobalSearch = ({
         type="search"
         value={searchValue}
         onChange={(e) => handleSearchChange(e.target.value)}
+        aria-label={placeholder}
+        role="searchbox"
+        aria-describedby="search-description"
       />
       <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-2 peer-disabled:opacity-50">
         <SearchIcon size={16} aria-hidden="true" />
+      </div>
+      <div id="search-description" className="sr-only">
+        Search through recipes and content
       </div>
     </div>
   );
