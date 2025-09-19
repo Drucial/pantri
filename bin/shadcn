@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Script to add shadcn components from anywhere in the repo
+# Usage: shadcn add <component-name>
+# Example: shadcn add separator
+
+set -e
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get the repo root directory (parent of bin directory)
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+# Check if correct arguments are provided
+if [ $# -lt 2 ] || [ "$1" != "add" ]; then
+    echo "Usage: shadcn add <component-name>"
+    echo "Example: shadcn add separator"
+    exit 1
+fi
+
+# Get the component name from arguments (second argument)
+COMPONENT_NAME="$2"
+
+# Change to the UI package directory where shadcn components are managed
+cd "$REPO_ROOT/packages/ui"
+
+echo "Adding shadcn component: $COMPONENT_NAME"
+echo "Running from: $(pwd)"
+
+# Run the shadcn command
+pnpm dlx shadcn@latest add "$COMPONENT_NAME"
+
+echo "✅ Successfully added $COMPONENT_NAME component!"
