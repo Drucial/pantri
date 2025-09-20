@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@workspace/ui/components/button";
+import { FlipButton } from "@workspace/ui/components/ui/shadcn-io/flip-button";
 import type { LucideIcon } from "lucide-react";
 import {
   CameraIcon,
@@ -8,45 +8,10 @@ import {
   LinkIcon,
   PenLineIcon,
 } from "lucide-react";
+import { motion } from "motion/react";
 
 type RecipeIntakeOptionsProps = {
   onOptionSelect?: (value: string) => void;
-};
-
-export const RecipeIntakeOptions = ({
-  onOptionSelect,
-}: RecipeIntakeOptionsProps) => {
-  const handleOptionClick = (value: string) => {
-    onOptionSelect?.(value);
-  };
-
-  return (
-    <div
-      className="flex items-center"
-      role="group"
-      aria-label="Recipe input options"
-    >
-      {options.map((option) => (
-        <div key={option.value} className="group px-1">
-          <Button
-            variant="ghost"
-            className="gap-0 group w-8 group-hover:w-28 overflow-hidden transition-all duration-300"
-            onClick={() => handleOptionClick(option.value)}
-            aria-label={`${option.label} recipe input`}
-            title={option.label}
-          >
-            <option.icon size={16} aria-hidden="true" />
-            <span
-              className="w-0 ml-0 opacity-0 group-hover:w-auto group-hover:ml-2 group-hover:opacity-100 transition-all duration-300"
-              aria-hidden="true"
-            >
-              {option.label}
-            </span>
-          </Button>
-        </div>
-      ))}
-    </div>
-  );
 };
 
 type RecipeIntakeOption = {
@@ -77,3 +42,52 @@ const options: RecipeIntakeOption[] = [
     icon: CameraIcon,
   },
 ];
+
+export const RecipeIntakeOptions = ({
+  onOptionSelect,
+}: RecipeIntakeOptionsProps) => {
+  const handleOptionClick = (value: string) => {
+    onOptionSelect?.(value);
+  };
+
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.6,
+          },
+        },
+      }}
+      layout
+      className="flex items-center gap-2"
+      role="group"
+      aria-label="Recipe input options"
+    >
+      {options.map((option) => (
+        <motion.div
+          key={option.value}
+          className="relative group"
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: { opacity: 1, y: 0 },
+          }}
+        >
+          <FlipButton
+            icon={option.icon}
+            backText={option.label}
+            variant="ghost"
+            from="left"
+            onClick={() => handleOptionClick(option.value)}
+            aria-label={`${option.label} recipe input`}
+            title={option.label}
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+};

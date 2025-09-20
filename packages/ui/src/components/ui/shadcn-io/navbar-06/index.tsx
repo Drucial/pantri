@@ -211,11 +211,11 @@ const NavbarLogo = ({
       e.preventDefault();
       onClick?.();
     }}
-    className="flex items-center space-x-2 text-primary hover:text-primary/90 transition-colors cursor-pointer"
+    className="flex items-center space-x-1 text-primary hover:text-primary/90 transition-colors cursor-pointer"
   >
     <div className="text-2xl">{logo}</div>
-    <H3 className="leading-none">
-      <span>pantr.io</span>
+    <H3 className="leading-none mb-1">
+      <span>pantri</span>
     </H3>
   </button>
 );
@@ -277,6 +277,8 @@ const UserMenu = ({
     </DropdownMenuContent>
   </DropdownMenu>
 );
+
+export const NAVBAR_HEIGHT = 64;
 
 // Types
 export type Navbar06NavItem = {
@@ -376,7 +378,7 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
       <header
         ref={combinedRef}
         className={cn(
-          "fixed top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 [&_*]:no-underline",
+          "sticky top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 [&_*]:no-underline h-16",
           className
         )}
         {...props}

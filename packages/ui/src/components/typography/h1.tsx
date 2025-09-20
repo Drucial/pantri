@@ -13,7 +13,7 @@ const H1 = React.forwardRef<
     <Comp
       ref={ref}
       className={cn(
-        "scroll-m-20 text-4xl font-extrabold tracking-tight leading-tight lg:text-7xl",
+        "scroll-m-20 text-4xl font-bold text-primary/80 tracking-tight leading-tight lg:text-7xl",
         className
       )}
       {...props}
