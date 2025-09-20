@@ -1,9 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
-import "@workspace/ui/globals.css";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/navbar";
+import { Providers } from "@/components/providers";
+import "@workspace/ui/globals.css";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -28,7 +28,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <Providers>
             <Navbar />
-            {children}
+            <main>{children}</main>
           </Providers>
         </ErrorBoundary>
       </body>

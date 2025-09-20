@@ -378,12 +378,12 @@ export const Navbar06 = React.forwardRef<HTMLElement, Navbar06Props>(
       <header
         ref={combinedRef}
         className={cn(
-          "sticky top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 [&_*]:no-underline h-16",
+          "sticky top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-8 [&_*]:no-underline h-16",
           className
         )}
         {...props}
       >
-        <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between gap-4">
+        <div className="flex h-16 items-center justify-between gap-4">
           {/* Left side */}
           <div className="flex flex-1 items-center gap-2">
             {/* Mobile menu trigger */}
