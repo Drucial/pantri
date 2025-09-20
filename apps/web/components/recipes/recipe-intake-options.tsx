@@ -80,7 +80,8 @@ export const RecipeIntakeOptions = ({
           <FlipButton
             icon={option.icon}
             backText={option.label}
-            variant="ghost"
+            initialVariant="ghost"
+            finalVariant="default"
             from="left"
             onClick={() => handleOptionClick(option.value)}
             aria-label={`${option.label} recipe input`}

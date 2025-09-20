@@ -25,14 +25,12 @@ type FlipButtonProps = HTMLMotionProps<"button"> & {
   initialVariant?: VariantProps<typeof buttonVariants>["variant"];
   finalVariant?: VariantProps<typeof buttonVariants>["variant"];
   size?: VariantProps<typeof buttonVariants>["size"];
-  // Legacy prop for backward compatibility
-  variant?: VariantProps<typeof buttonVariants>["variant"];
 };
 
 function FlipButton({
   icon,
   backText,
-  transition = { type: "spring", stiffness: 200, damping: 30, duration: 0.6 },
+  transition = { type: "spring", stiffness: 120, damping: 20, duration: 0.3 },
   className,
   frontClassName,
   backClassName,
@@ -40,14 +38,10 @@ function FlipButton({
   initialVariant = "default",
   finalVariant = "default",
   size: _size = "default",
-  variant, // Legacy prop
   ...props
 }: FlipButtonProps) {
   const Icon = icon;
   const [isHovered, setIsHovered] = React.useState(false);
-
-  // Use legacy variant prop if provided, otherwise use initialVariant
-  const effectiveInitialVariant = variant || initialVariant;
 
   const isVertical = from === "top" || from === "bottom";
   const rotateAxis = isVertical ? "rotateX" : "rotateY";
@@ -75,11 +69,11 @@ function FlipButton({
     initial: buildVariant(0, 90, backOffset),
     hover: {
       ...buildVariant(1, 0, "0%"),
-      transition: { delay: 0.2, ...transition },
+      transition: { delay: 0.1, ...transition },
     },
   };
 
-  const currentVariant = isHovered ? finalVariant : effectiveInitialVariant;
+  const currentVariant = isHovered ? finalVariant : initialVariant;
 
   const iconButtonStyles = buttonVariants({
     variant: currentVariant,
@@ -102,10 +96,11 @@ function FlipButton({
         default: transition,
       }}
       className={cn(
-        "relative perspective-[1000px] overflow-hidden w-10 h-10 hover:w-auto hover:px-4 transition-colors duration-300",
+        "relative perspective-[1000px] overflow-hidden h-10 hover:px-4 transition-all duration-300 ease-out pointer-cursor",
         iconButtonStyles,
         className
       )}
+      style={{ width: isHovered ? "auto" : "40px" }}
       {...props}
     >
       <motion.span
