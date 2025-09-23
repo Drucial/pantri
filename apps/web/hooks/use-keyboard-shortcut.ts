@@ -117,10 +117,13 @@ export function useKeyboardShortcut(
     if (typeof window === "undefined") return;
 
     const targetElement = target || document;
-    targetElement.addEventListener(eventType, handleKeyEvent);
+    targetElement.addEventListener(eventType, handleKeyEvent as EventListener);
 
     return () => {
-      targetElement.removeEventListener(eventType, handleKeyEvent);
+      targetElement.removeEventListener(
+        eventType,
+        handleKeyEvent as EventListener
+      );
     };
   }, [enabled, target, eventType, handleKeyEvent]);
 }
@@ -159,7 +162,7 @@ export function useKeyboardShortcuts(
 export const createShortcut = {
   /** Cmd+K (Mac) or Ctrl+K (Windows/Linux) */
   search: (): KeyboardShortcut => ({
-    key: "k",
+    key: "f",
     metaKey: true,
     ctrlKey: true,
     preventDefault: true,

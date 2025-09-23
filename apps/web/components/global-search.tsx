@@ -30,7 +30,6 @@ export const GlobalSearch = ({
     onSearchChange?.(value);
   };
 
-  // Register Cmd+K / Ctrl+K shortcut to focus search
   useKeyboardShortcut(createShortcut.search(), () => inputRef.current?.focus());
 
   return (
@@ -65,7 +64,7 @@ export const GlobalSearch = ({
               <span className="text-sm font-medium shrink-0">⌘</span>
             </Badge>
             <Badge variant="outline" className="size-6 bg-muted">
-              <span className="text-sm font-medium shrink-0">K</span>
+              <span className="text-sm font-medium shrink-0">F</span>
             </Badge>
           </motion.div>
         )}
