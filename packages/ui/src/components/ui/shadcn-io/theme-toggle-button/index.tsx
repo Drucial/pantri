@@ -1,9 +1,9 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
-import { useCallback } from "react";
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
+import { Moon, Sun } from "lucide-react";
+import { useCallback } from "react";
 
 type AnimationVariant = "circle" | "circle-blur" | "gif" | "polygon";
 
@@ -36,6 +36,12 @@ export const ThemeToggleButton = ({
   onClick,
 }: ThemeToggleButtonProps) => {
   const handleClick = useCallback(() => {
+    // Only run on client side
+    if (typeof window === "undefined") {
+      onClick?.();
+      return;
+    }
+
     // Inject animation styles for this specific transition
     const styleId = `theme-transition-${Date.now()}`;
     const style = document.createElement("style");
@@ -58,7 +64,7 @@ export const ThemeToggleButton = ({
         start === "center" ? "50" : start.includes("top") ? "0" : "100";
       css = `
         @supports (view-transition-name: root) {
-          ::view-transition-old(root) { 
+          ::view-transition-old(root) {
             animation: none;
           }
           ::view-transition-new(root) {
@@ -82,7 +88,7 @@ export const ThemeToggleButton = ({
         start === "center" ? "50" : start.includes("top") ? "0" : "100";
       css = `
         @supports (view-transition-name: root) {
-          ::view-transition-old(root) { 
+          ::view-transition-old(root) {
             animation: none;
           }
           ::view-transition-new(root) {
@@ -209,7 +215,8 @@ export const ThemeToggleButton = ({
 // Export a helper hook for using with View Transitions API
 export const useThemeTransition = () => {
   const startTransition = useCallback((updateFn: () => void) => {
-    if ("startViewTransition" in document) {
+    // Check if we're in the browser and if the View Transitions API is available
+    if (typeof window !== "undefined" && "startViewTransition" in document) {
       (
         document as Document & {
           startViewTransition: (updateFn: () => void) => void;
